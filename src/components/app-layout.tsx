@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Nav } from "@/features/navbar/nav";
-import { EqualNot, HomeIcon } from "lucide-react";
+import { EqualNot, HomeIcon, Sigma, Table2 } from "lucide-react";
 import { Outlet } from "react-router";
 import { DataCollaborator } from "./avatar";
 import LogoutButton from "./ui/logout-button";
@@ -11,7 +11,7 @@ export function AppLayout() {
   return (
     <div
       className={`grid transition-all duration-300 ${
-        isCollapsed ? "grid-cols-[4rem_1fr]" : "grid-cols-[16rem_1fr]"
+        isCollapsed ? "grid-cols-[4rem_1fr]" : "grid-cols-[18rem_1fr]"
       }`}
     >
       <header className="flex flex-col bg-stone-100 border-r border-stone-200">
@@ -27,7 +27,18 @@ export function AppLayout() {
               title: "Divergências",
               icon: EqualNot,
               variant: "default",
-              to: "divergences",
+              to: [
+                {
+                  title: "Transações Divergentes",
+                  to: "divergences/procv",
+                  icon: Table2,
+                },
+                {
+                  title: "Valores Divergentes",
+                  to: "divergences/somase",
+                  icon: Sigma,
+                },
+              ],
             },
           ]}
           isCollapsed={isCollapsed}

@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { AppLayout } from "./components/app-layout";
 import { Home } from "./features/home";
-
+import { Procv } from "./features/divergencia/procv";
 
 const router = createBrowserRouter([
   {
@@ -16,20 +16,23 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "divergences",
-        element: <div>Divergences</div>,
-      }
+        path: "divergences/procv",
+        element: <Procv />,
+      },
+      {
+        path: "divergences/somase",
+        element: <div>Valores Divergentes</div>,
+      },
     ],
   },
 ]);
 
 function App() {
-
   return (
     <>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

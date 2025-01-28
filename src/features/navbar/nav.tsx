@@ -3,7 +3,18 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { NavLink } from "react-router";
 import { BorderBeam } from "@/components/ui/border-beam";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface NavProps {
   links: NavLinkProps[];
@@ -14,99 +25,44 @@ interface NavProps {
 interface NavLinkProps {
   title: string;
   label?: string;
-  to: string;
+  to: string | NavLinkAccordionProps[];
   icon: LucideIcon;
   variant: "default" | "ghost";
 }
 
-const NavHeader = ({
-  isCollapsed,
-  toggleCollapse,
-}: {
-  isCollapsed: boolean;
-  toggleCollapse: () => void;
-}) => (
-  <div className="border-b">
-    <div
-      className={cn(
-        "flex items-center h-[59px] px-4",
-        isCollapsed ? "justify-center" : "justify-between"
-      )}
-    >
-      <Menu className="cursor-pointer" onClick={toggleCollapse} />
-      {!isCollapsed && (
-        <h2 className="flex items-end gap-1 px-2">
-          <div className="text-blue-600 font-semibold">
-            <span className="text-xl">Q</span>
-            <span className="text-sm">2</span>
-          </div>
-          Ingressos
-        </h2>
-      )}
-    </div>
-  </div>
-);
-
-const NavItem = ({
-  link,
-  isCollapsed,
-}: {
-  link: NavLinkProps;
-  isCollapsed: boolean;
-}) => (
-  <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger>
-        <NavLink
-          to={link.to}
-          className={({ isActive }) =>
-            cn(
-              buttonVariants({ variant: link.variant }),
-              link.variant === "default" &&
-                "w-full bg-transparent text-stone-900 font-semibold hover:bg-blue-500 hover:text-stone-50 border-none shadow-none",
-              isActive && "bg-blue-500 text-stone-50",
-              isCollapsed ? "justify-center" : "justify-start"
-            )
-          }
-        >
-          <link.icon className={cn("h-7 w-7", isCollapsed ? "" : "mr-2")} />
-          {!isCollapsed && link.title}
-          {link.label && !isCollapsed && <span>{link.label}</span>}
-        </NavLink>
-      </TooltipTrigger>
-      {isCollapsed && (
-        <TooltipContent side="right">
-          {link.title}
-        </TooltipContent>
-      )}
-    </Tooltip>
-  </TooltipProvider>
-);
-
-
-const NavList = ({
-  links,
-  isCollapsed,
-}: {
-  links: NavLinkProps[];
-  isCollapsed: boolean;
-}) => (
-  <nav className={cn("grid gap-1 overflow-y-auto overflow-x-hidden", isCollapsed ? 'px-2' : 'px-4')}>
-    {links.map((link, index) => (
-      <NavItem key={index} link={link} isCollapsed={isCollapsed} />
-    ))}
-  </nav>
-);
+interface NavLinkAccordionProps {
+  title: string;
+  to: string;
+  icon: LucideIcon;
+}
 
 export function Nav({ links, isCollapsed, toggleCollapse }: NavProps) {
   return (
     <section
       className={cn(
         "flex flex-col gap-4 transition-all duration-300",
-        isCollapsed ? "w-16" : "w-64"
+        isCollapsed ? "w-16" : "w-[100%]"
       )}
     >
-      <NavHeader isCollapsed={isCollapsed} toggleCollapse={toggleCollapse} />
+      <div className="border-b">
+        <div
+          className={cn(
+            "flex items-center h-[59px] px-4",
+            isCollapsed ? "justify-center" : "justify-between"
+          )}
+        >
+          <Menu className="cursor-pointer" onClick={toggleCollapse} />
+          {!isCollapsed && (
+            <h2 className="flex items-end gap-1 px-2">
+              <div className="text-blue-600 font-semibold">
+                <span className="text-xl">Q</span>
+                <span className="text-sm">2</span>
+              </div>
+              Ingressos
+            </h2>
+          )}
+        </div>
+      </div>
       {!isCollapsed && (
         <div className="px-4">
           <div className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg border md:shadow-md">
@@ -119,3 +75,110 @@ export function Nav({ links, isCollapsed, toggleCollapse }: NavProps) {
     </section>
   );
 }
+
+const NavList = ({
+  links,
+  isCollapsed,
+}: {
+  links: NavLinkProps[];
+  isCollapsed: boolean;
+}) => (
+  <nav
+    className={cn(
+      "grid gap-1 overflow-y-auto overflow-x-hidden",
+      isCollapsed ? "px-2" : "px-4"
+    )}
+  >
+    {links.map((link, index) => (
+      <NavItem key={index} link={link} isCollapsed={isCollapsed} />
+    ))}
+  </nav>
+);
+
+const NavItem = ({
+  link,
+  isCollapsed,
+}: {
+  link: NavLinkProps;
+  isCollapsed: boolean;
+}) => (
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger>
+        {Array.isArray(link.to) ? (
+          <Accordion type="single" collapsible className="border-none">
+            <AccordionItem value={`accordion-${link.title}`}>
+              <AccordionTrigger
+                className={cn(
+                  { variant: link.variant },
+                  " hover:bg-blue-500 hover:text-stone-50 rounded-md hover:no-underline py-2 mb-1 ",
+                  isCollapsed ? " [&>svg]:hidden justify-center" : "pl-4 "
+                )}
+              >
+                <div className="flex gap-2 items-center">
+                  <link.icon className="h-5 w-5" />
+                  {!isCollapsed && link.title}
+                </div>
+              </AccordionTrigger>
+              {link.to.map((item, index) => (
+                <AccordionContent
+                  key={index}
+                  className={cn("pb-0 mb-1", isCollapsed ? "pl-0" : "pl-4")}
+                >
+                  <NavItemLink
+                    to={item.to}
+                    title={item.title}
+                    icon={item.icon}
+                    variant={link.variant}
+                    isCollapsed={isCollapsed}
+                  />
+                </AccordionContent>
+              ))}
+            </AccordionItem>
+          </Accordion>
+        ) : (
+          <NavItemLink
+            to={link.to}
+            title={link.title}
+            icon={link.icon}
+            variant={link.variant}
+            isCollapsed={isCollapsed}
+          />
+        )}
+      </TooltipTrigger>
+      {isCollapsed && (
+        <TooltipContent side="right">{link.title}</TooltipContent>
+      )}
+    </Tooltip>
+  </TooltipProvider>
+);
+
+const NavItemLink = ({
+  to,
+  title,
+  icon: Icon,
+  variant,
+  isCollapsed,
+}: {
+  to: string;
+  title: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  variant: "default" | "ghost";
+  isCollapsed: boolean;
+}) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      cn(
+        buttonVariants({ variant }),
+        variant === "default" &&
+          "w-full bg-transparent text-stone-900 font-semibold hover:bg-blue-500 hover:text-stone-50 border-none shadow-none",
+        isActive && "bg-blue-500 text-stone-50",
+        isCollapsed ? "justify-center" : "justify-start"
+      )
+    }
+  >
+    {Icon && <Icon className={cn("h-7 w-7", isCollapsed ? "" : "mr-2")} />}
+    {!isCollapsed && title}
+  </NavLink>
+);
