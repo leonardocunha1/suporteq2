@@ -1,7 +1,8 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { AppLayout } from "./components/app-layout";
 import { Home } from "./features/home";
-import { Procv } from "./features/divergencia/procv";
+import { ValoresDivergentes } from "./features/divergencia/valores";
+import { TransacoesDivergentes } from "./features/divergencia/transacoes";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +18,11 @@ const router = createBrowserRouter([
       },
       {
         path: "divergences/procv",
-        element: <Procv />,
+        element: <TransacoesDivergentes />,
       },
       {
         path: "divergences/somase",
-        element: <div>Valores Divergentes</div>,
+        element: <ValoresDivergentes />,
       },
     ],
   },

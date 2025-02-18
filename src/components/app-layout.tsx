@@ -10,7 +10,7 @@ export function AppLayout() {
 
   return (
     <div
-      className={`grid transition-all duration-300 ${
+      className={`grid transition-all duration-300 text-sm ${
         isCollapsed ? "grid-cols-[4rem_1fr]" : "grid-cols-[18rem_1fr]"
       }`}
     >
