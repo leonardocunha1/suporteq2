@@ -107,16 +107,16 @@ const NavItem = ({
       <TooltipTrigger>
         {Array.isArray(link.to) ? (
           <Accordion type="single" collapsible className="border-none">
-            <AccordionItem value={`accordion-${link.title}`}>
+            <AccordionItem value={`accordion-${link.title}`} className="border-none">
               <AccordionTrigger
                 className={cn(
                   { variant: link.variant },
-                  " hover:bg-blue-500 hover:text-stone-50 rounded-md hover:no-underline py-2 mb-1 ",
+                  " hover:bg-blue-500 hover:text-stone-50 rounded-md hover:no-underline py-2",
                   isCollapsed ? " [&>svg]:hidden justify-center" : "pl-4 "
                 )}
               >
-                <div className="flex gap-2 items-center">
-                  <link.icon className="h-5 w-5" />
+                <div className="flex gap-3 items-center">
+                  <link.icon className="h-4 w-4" />
                   {!isCollapsed && link.title}
                 </div>
               </AccordionTrigger>
@@ -172,13 +172,13 @@ const NavItemLink = ({
       cn(
         buttonVariants({ variant }),
         variant === "default" &&
-          "w-full bg-transparent text-stone-900 font-semibold hover:bg-blue-500 hover:text-stone-50 border-none shadow-none",
+          "w-full bg-transparent text-stone-800 hover:bg-blue-500 hover:text-stone-50 border-none shadow-none gap-1",
         isActive && "bg-blue-500 text-stone-50",
         isCollapsed ? "justify-center" : "justify-start"
       )
     }
   >
-    {Icon && <Icon className={cn("h-7 w-7", isCollapsed ? "" : "mr-2")} />}
+    {Icon && <Icon className={cn("h-4 w-4", isCollapsed ? "" : "mr-2")} />}
     {!isCollapsed && title}
   </NavLink>
 );

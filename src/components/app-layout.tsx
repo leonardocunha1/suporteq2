@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Nav } from "@/features/navbar/nav";
-import { EqualNot, HomeIcon, Sigma, Table2 } from "lucide-react";
+import { DollarSign, EqualNot, HomeIcon, Sigma, Table2 } from "lucide-react";
 import { Outlet } from "react-router";
 import { DataCollaborator } from "./avatar";
 import LogoutButton from "./ui/logout-button";
@@ -40,6 +40,18 @@ export function AppLayout() {
                 },
               ],
             },
+            {
+              title: "Estorno Parcial",
+              icon: DollarSign,
+              variant: "default",
+              to: "estorno-parcial",
+            },
+            {
+              title: "Separar MP e PS",
+              icon: DollarSign,
+              variant: "default",
+              to: "separar-mp-ps",
+            }
           ]}
           isCollapsed={isCollapsed}
           toggleCollapse={() => setIsCollapsed(!isCollapsed)}
@@ -50,7 +62,7 @@ export function AppLayout() {
         <aside className="flex bg-stone-100 justify-end px-4 h-[60px] border-b">
           <DataCollaborator />
         </aside>
-        <main className="flex flex-col bg-stone-50 h-[calc(100dvh-60px)] overflow-y-auto">
+        <main className="flex flex-col bg-stone-50 h-[calc(100dvh-60px)] overflow-y-auto p-5">
           <Outlet />
         </main>
       </div>
