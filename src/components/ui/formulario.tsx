@@ -29,6 +29,7 @@ type BaseFormInput = {
   description?: string;
   columns?:
     | "col-span-12"
+    | "col-span-8"
     | "col-span-6"
     | "col-span-4"
     | "col-span-3"
@@ -68,11 +69,11 @@ export function Formulario<T extends z.ZodObject<z.ZodRawShape>>({
     <Form {...form}>
       <Card className="p-5">
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid items-end grid-cols-12 gap-x-2 gap-y-4">
+          <div className="grid items-center grid-cols-12 gap-x-2 gap-y-4">
             {inputs.map((input, index) => (
               <div
                 className={cn(
-                  "flex flex-col gap-4 transition-all duration-300",
+                  "flex flex-col transition-all duration-300",
                   input.columns ? input.columns : "col-span-12"
                 )}
                 key={index}
@@ -82,69 +83,71 @@ export function Formulario<T extends z.ZodObject<z.ZodRawShape>>({
                   name={input.id as Path<z.infer<T>>}
                   render={({ field }) => (
                     <FormItem>
-                      {input.label && <FormLabel>{input.label}</FormLabel>}
-                      <FormControl>
-                        {input.type === "textarea" ? (
-                          <Textarea
-                            className="border rounded-md p-2 w-full"
-                            placeholder={input.placeholder}
-                            {...field}
-                          />
-                        ) : input.type === "checkbox" ? (
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            className="mt-1"
-                          />
-                        ) : input.type === "select" ? (
-                          <Select
-                            onValueChange={field.onChange}
-                            value={field.value}
-                          >
-                            <SelectTrigger className="text-gray-500">
-                              <SelectValue placeholder="Selecione uma opção" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {input.options.map((option) => (
-                                <SelectItem
-                                  key={option.value}
-                                  value={option.value}
-                                >
-                                  {option.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        ) : (
-                          <Input
-                            type={input.type}
-                            placeholder={input.placeholder}
-                            disabled={input.disabled}
-                            {...field}
-                            onChange={(e) => {
-                              if (input.type === "number") {
-                                field.onChange(
-                                  e.target.value === ""
-                                    ? ""
-                                    : Number(e.target.value)
-                                );
-                              } else {
-                                field.onChange(e.target.value);
+                      <div className={cn(input.type === "checkbox" && "flex items-center gap-2")}>
+                        {input.label && <FormLabel>{input.label}</FormLabel>}
+                        <FormControl>
+                          {input.type === "textarea" ? (
+                            <Textarea
+                              className="border rounded-md p-2 w-full"
+                              placeholder={input.placeholder}
+                              {...field}
+                            />
+                          ) : input.type === "checkbox" ? (
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          ) : input.type === "select" ? (
+                            <Select
+                              onValueChange={field.onChange}
+                              value={field.value}
+                            >
+                              <SelectTrigger className="text-gray-500">
+                                <SelectValue placeholder="Selecione uma opção" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {input.options.map((option) => (
+                                  <SelectItem
+                                    key={option.value}
+                                    value={option.value}
+                                  >
+                                    {option.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <Input
+                              type={input.type}
+                              placeholder={input.placeholder}
+                              disabled={input.disabled}
+                              step={input.type === "number" ? "0.001" : undefined}
+                              {...field}
+                              onChange={(e) => {
+                                if (input.type === "number") {
+                                  field.onChange(
+                                    e.target.value === ""
+                                      ? ""
+                                      : Number(e.target.value)
+                                  );
+                                } else {
+                                  field.onChange(e.target.value);
+                                }
+                              }}
+                              value={
+                                input.type === "number" &&
+                                field.value !== undefined
+                                  ? String(field.value)
+                                  : field.value
                               }
-                            }}
-                            value={
-                              input.type === "number" &&
-                              field.value !== undefined
-                                ? String(field.value)
-                                : field.value
-                            }
-                          />
+                            />
+                          )}
+                        </FormControl>
+                        {input.description && (
+                          <FormDescription>{input.description}</FormDescription>
                         )}
-                      </FormControl>
-                      {input.description && (
-                        <FormDescription>{input.description}</FormDescription>
-                      )}
-                      <FormMessage />
+                        <FormMessage />
+                      </div>
                     </FormItem>
                   )}
                 />
