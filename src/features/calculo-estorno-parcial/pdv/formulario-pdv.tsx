@@ -89,7 +89,6 @@ export function FormularioPDV({
       data.taxPaymentProducer > 0
         ? parteTaxaProdutor * (valueFull * taxPaymentDecimal)
         : 0;
-    console.log(valorTaxaPagamentoRepassadoAoProdutor);
 
     const producerNetValue =
       data.quemAssumeTaxPayment === "cliente"
@@ -117,11 +116,6 @@ export function FormularioPDV({
         valorCobradoAdquirente;
 
       valueLiquidQuero2 = parteQ2QueSeraSplitada * parteTaxaMarilia;
-
-      console.log({
-        gordurinhaQ2,
-        parteQ2QueSeraSplitada,
-      });
     } else {
       valueLiquidQuero2 = 0;
       valueLiquidFranchise = valueLiquid - producerNetValue;
