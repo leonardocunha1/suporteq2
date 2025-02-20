@@ -23,56 +23,59 @@ export function CalculoEstornoParcial() {
         <TabsTrigger value="account">Guia</TabsTrigger>
       </TabsList>
       <TabsContent value="calculo">
-        <CardComponent
-          sections={[
-            {
-              titulo: "Tipo de Transação",
-              itens: [
-                <div className="space-y-4">
-                  {!exibirFormulario && (
-                    <>
-                      <Select onValueChange={setTipoTransacao}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione o tipo de transação" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="online">Online</SelectItem>
-                          <SelectItem value="pdv">PDV</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Button
-                        onClick={() => {
-                          if (tipoTransacao) setExibirFormulario(true);
-                        }}
-                        className="bg-blue-500 text-white"
-                        size="sm"
-                        disabled={!tipoTransacao}
-                      >
-                        Próximo
-                      </Button>
-                    </>
-                  )}
-                  {exibirFormulario &&
-                    (tipoTransacao === "online" ? (
-                      <FormularioOnline
-                        onBack={() => {
-                          setExibirFormulario(false);
-                          setTipoTransacao("");
-                        }}
-                      />
-                    ) : (
-                      <PDV
-                        onBack={() => {
-                          setExibirFormulario(false);
-                          setTipoTransacao("");
-                        }}
-                      />
-                    ))}
-                </div>,
-              ],
-            },
-          ]}
-        />
+        {!exibirFormulario && (
+          <CardComponent
+            sections={[
+              {
+                titulo: "Tipo de Transação",
+                itens: [
+                  <div className="space-y-4" key="tipo-transacao">
+                    {!exibirFormulario && (
+                      <>
+                        <Select onValueChange={setTipoTransacao}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione o tipo de transação" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="online">Online</SelectItem>
+                            <SelectItem value="pdv">PDV</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <Button
+                          onClick={() => {
+                            if (tipoTransacao) setExibirFormulario(true);
+                          }}
+                          className="bg-blue-500 text-white"
+                          size="sm"
+                          disabled={!tipoTransacao}
+                        >
+                          Próximo
+                        </Button>
+                      </>
+                    )}
+                  </div>,
+                ],
+              },
+            ]}
+          />
+        )}
+
+        {exibirFormulario &&
+          (tipoTransacao === "online" ? (
+            <FormularioOnline
+              onBack={() => {
+                setExibirFormulario(false);
+                setTipoTransacao("");
+              }}
+            />
+          ) : (
+            <PDV
+              onBack={() => {
+                setExibirFormulario(false);
+                setTipoTransacao("");
+              }}
+            />
+          ))}
       </TabsContent>
     </Tabs>
   );

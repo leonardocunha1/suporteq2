@@ -21,7 +21,14 @@ export function FormularioPDV({
   setResultados,
 }: {
   onBack: () => void;
-  setResultados: (resultados: any) => void;
+  setResultados: (resultados: {
+    originalProductValue: number;
+    producerNetValue: number;
+    valueFull: number;
+    valueLiquid: number;
+    valueLiquidFranchise: number;
+    valueLiquidQuero2: number;
+  }) => void;
 }) {
   const form = useForm<z.infer<typeof formSchemaPDV>>({
     resolver: zodResolver(formSchemaPDV),
@@ -59,71 +66,76 @@ export function FormularioPDV({
   }, [taxPayment, taxPaymentQ2, quemAssumeTaxPayment, form]);
 
   function onSubmit(data: z.infer<typeof formSchemaPDV>) {
-    const minorarValorTransacao =
+    const majorarValorTransacao =
       Math.trunc(((100 - data.taxPayment) / 100) * 100) / 100;
-    // console.log({ minorarValorTransacao });
 
     const valueFull =
       data.quemAssumeTaxPayment === "cliente"
         ? Math.ceil(
-            data.originalProductValue / parseFloat(minorarValorTransacao)
+            data.originalProductValue /
+              parseFloat(majorarValorTransacao.toString())
           )
         : data.originalProductValue;
 
-    console.log({ valueFull });
+    const taxPaymentDecimal = data.taxPayment / 100;
+    const parteQ2QueSeraSplitada = valueFull * taxPaymentDecimal;
 
-    const valueLiquid = valueFull - valueFull * (data.taxaAdquirente / 100);
-    console.log({ valueLiquid });
+    const valorCobradoAdquirente = valueFull * (data.taxaAdquirente / 100);
 
-    // cálculo da parte da taxa de pagamento que vai para o produtor e para a marília (se for o caso)
+    const valueLiquid = valueFull - valorCobradoAdquirente;
+
     const parteTaxaProdutor = data.taxPaymentProducer / data.taxPayment;
-    const parteTaxaMarilia = data.taxValueFranchise
-      ? data.taxValueFranchise / data.taxPayment
-      : 0;
-
-    // cálculo da taxa de pagamento repassada ao produtor, marilia (se for o caso)
     const valorTaxaPagamentoRepassadoAoProdutor =
-      data.taxPaymentProducer > 0 ? parteTaxaProdutor * (valueFull - data.originalProductValue) : 0;
-    // const valorTaxaPagamentoRepassadoAMarilia = data.taxValueFranchise ? parteTaxaMarilia * taxPaymentValue : 0;
+      data.taxPaymentProducer > 0
+        ? parteTaxaProdutor * (valueFull * taxPaymentDecimal)
+        : 0;
+    console.log(valorTaxaPagamentoRepassadoAoProdutor);
 
     const producerNetValue =
       data.quemAssumeTaxPayment === "cliente"
         ? data.originalProductValue + valorTaxaPagamentoRepassadoAoProdutor
-        : data.originalProductValue - (data.originalProductValue * (data.taxPayment/100));
-    console.log({ producerNetValue });
+        : data.originalProductValue -
+          data.originalProductValue * taxPaymentDecimal;
 
+    const lucroBruto = valueFull - data.originalProductValue;
+    const gordurinhaQ2 =
+      data.quemAssumeTaxPayment === "cliente"
+        ? lucroBruto - parteQ2QueSeraSplitada
+        : 0;
 
-      let valueLiquidFranchise;
-      let valueLiquidQuero2;
-      const lucroLiquido = valueLiquid - producerNetValue;
-      console.log({ lucroLiquido });
-      // const valueLiquidFranchise = valueLiquid - producerNetValue;
-      if (isMariliaEvent) {
-        valueLiquidFranchise = lucroLiquido * parteTaxaMarilia;
-        valueLiquidQuero2 = lucroLiquido - valueLiquidFranchise;
-      } else {
-        valueLiquidQuero2 = 0;
-        valueLiquidFranchise = lucroLiquido;
-      }
+    let valueLiquidFranchise;
+    let valueLiquidQuero2;
 
-      // console.log({
-      //   taxPaymentValue,
-      //   producerNetValue,
-      //   valueFull,
-      //   valueLiquid,
-      //   valueLiquidFranchise,
-      //   valueLiquidQuero2
-      // });
+    if (isMariliaEvent) {
+      const parteTaxaFranca = (data.taxValueFranchise ?? 0) / data.taxPayment;
+      const parteTaxaMarilia =
+        (data.taxPaymentQ2 - (data.taxValueFranchise ?? 0)) / data.taxPayment;
 
-      setResultados({
-        producerNetValue,
-        valueFull,
-        valueLiquid,
-        valueLiquidFranchise,
-        valueLiquidQuero2,
+      valueLiquidFranchise =
+        parteQ2QueSeraSplitada * parteTaxaFranca +
+        gordurinhaQ2 -
+        valorCobradoAdquirente;
+
+      valueLiquidQuero2 = parteQ2QueSeraSplitada * parteTaxaMarilia;
+
+      console.log({
+        gordurinhaQ2,
+        parteQ2QueSeraSplitada,
       });
+    } else {
+      valueLiquidQuero2 = 0;
+      valueLiquidFranchise = valueLiquid - producerNetValue;
     }
-  
+
+    setResultados({
+      originalProductValue: data.originalProductValue,
+      producerNetValue,
+      valueFull,
+      valueLiquid,
+      valueLiquidFranchise,
+      valueLiquidQuero2,
+    });
+  }
 
   return (
     <>

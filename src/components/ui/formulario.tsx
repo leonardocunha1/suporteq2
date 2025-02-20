@@ -83,7 +83,11 @@ export function Formulario<T extends z.ZodObject<z.ZodRawShape>>({
                   name={input.id as Path<z.infer<T>>}
                   render={({ field }) => (
                     <FormItem>
-                      <div className={cn(input.type === "checkbox" && "flex items-center gap-2")}>
+                      <div
+                        className={cn(
+                          input.type === "checkbox" && "flex items-center gap-2"
+                        )}
+                      >
                         {input.label && <FormLabel>{input.label}</FormLabel>}
                         <FormControl>
                           {input.type === "textarea" ? (
@@ -121,7 +125,9 @@ export function Formulario<T extends z.ZodObject<z.ZodRawShape>>({
                               type={input.type}
                               placeholder={input.placeholder}
                               disabled={input.disabled}
-                              step={input.type === "number" ? "0.001" : undefined}
+                              step={
+                                input.type === "number" ? "0.001" : undefined
+                              }
                               {...field}
                               onChange={(e) => {
                                 if (input.type === "number") {
