@@ -38,6 +38,7 @@ export function FormularioOnline({
     valueLiquidQuero2: number;
   }) => void;
 }) {
+  console.log(setResultados);
   const form = useForm<z.infer<typeof formSchemaOnline>>({
     resolver: zodResolver(formSchemaOnline),
   });
@@ -136,6 +137,8 @@ export function FormularioOnline({
 
 
     const valueComTaxaConveniencia = data.quemAssumeTaxConvenience === "produtor"
+    console.log(valueComTaxaConveniencia);
+    console.log(taxConvenienceDecimal);
   }
   return (
     <>
