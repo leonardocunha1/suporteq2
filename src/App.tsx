@@ -1,9 +1,9 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { AppLayout } from "./components/app-layout";
 import { Home } from "./features/home";
-import { ValoresDivergentes } from "./features/divergencia/valores";
-import { TransacoesDivergentes } from "./features/divergencia/transacoes";
 import { CalculoEstornoParcial } from "./features/calculo-estorno-parcial";
+import { ValoresDivergentes } from "./features/utilitarios/valores";
+import { PROCV } from "./features/utilitarios/procv";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       },
       {
         path: "divergences/procv",
-        element: <TransacoesDivergentes />,
+        element: <PROCV />,
       },
       {
         path: "divergences/somase",
@@ -30,9 +30,9 @@ const router = createBrowserRouter([
         element: <CalculoEstornoParcial />,
       },
       {
-        path: 'separar-mp-ps',
-        element: <div>Cancelamento em massa - separar mp e ps</div>
-      }
+        path: "separar-mp-ps",
+        element: <div>Cancelamento em massa - separar mp e ps</div>,
+      },
     ],
   },
 ]);

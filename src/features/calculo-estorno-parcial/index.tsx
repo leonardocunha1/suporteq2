@@ -20,7 +20,7 @@ export function CalculoEstornoParcial() {
     <Tabs defaultValue="calculo">
       <TabsList>
         <TabsTrigger value="calculo">Calcular</TabsTrigger>
-        <TabsTrigger value="account">Guia</TabsTrigger>
+        <TabsTrigger value="guide">Guia</TabsTrigger>
       </TabsList>
       <TabsContent value="calculo">
         {!exibirFormulario && (
@@ -76,6 +76,29 @@ export function CalculoEstornoParcial() {
               }}
             />
           ))}
+      </TabsContent>
+      <TabsContent value="guide">
+        <CardComponent
+          sections={[
+            {
+              titulo:
+                "Para que serve o cálculo de estorno parcial de ingressos?",
+              itens: [
+                <div className="space-y-2">
+                  <p>
+                    Exemplo: Uma compra teve 10 ingressos, mas apenas 5 serão
+                    estornados e o recalculo das taxas e valores no financeiro
+                    terão que ser ajustadas.
+                  </p>
+                  <p>
+                    Para calcular o valor corretamente, precisamos informar o
+                    valor dos ingressos que permanecerão ativos.
+                  </p>
+                </div>,
+              ],
+            },
+          ]}
+        />
       </TabsContent>
     </Tabs>
   );

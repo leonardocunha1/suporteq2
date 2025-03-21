@@ -24,12 +24,12 @@ export function AppLayout() {
               to: "home",
             },
             {
-              title: "Divergências",
+              title: "Utilitários",
               icon: EqualNot,
               variant: "default",
               to: [
                 {
-                  title: "Transações Divergentes",
+                  title: "PROCV",
                   to: "divergences/procv",
                   icon: Table2,
                 },
@@ -41,7 +41,7 @@ export function AppLayout() {
               ],
             },
             {
-              title: "Estorno Parcial",
+              title: "Estorno Parcial - Ingressos",
               icon: DollarSign,
               variant: "default",
               to: "estorno-parcial",
@@ -51,7 +51,7 @@ export function AppLayout() {
               icon: DollarSign,
               variant: "default",
               to: "separar-mp-ps",
-            }
+            },
           ]}
           isCollapsed={isCollapsed}
           toggleCollapse={() => setIsCollapsed(!isCollapsed)}

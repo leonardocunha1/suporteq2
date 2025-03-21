@@ -51,7 +51,7 @@ function ListaDivergencias({ titulo, itens }: ListaDivergenciasProps) {
   );
 }
 
-export function TransacoesDivergentes() {
+export function PROCV() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
@@ -111,21 +111,18 @@ export function TransacoesDivergentes() {
               <CardComponent
                 sections={[
                   {
-                    titulo: "Guia de como encontrar transações divergentes",
+                    titulo: "Guia de como utilizar o PROCV",
                     icon: () => null,
                     itens: [
                       <div className="space-y-2">
                         <p>
-                          Quando as queries realizadas nos bancos ADMIN e FIN
-                          não mostrarem as divergências, esse form poderá
-                          otimizar o tempo de realizar um PROCV no Google
-                          Sheets.
+                          Esse utilitário tem por função encontrar valores que
+                          estão presentes em uma lista, mas não em outra.
                         </p>
                         <p>
-                          Digite as transações financeiras e administrativas
-                          (Gateways) que deseja comparar. Separe cada transação
-                          por vírgula. O resultado mostrará as que estão
-                          presentes em um e não no outro.
+                          Para isso, basta informar os valores separados por
+                          vírgula em cada um dos campos e clicar em "Encontrar
+                          Divergências".
                         </p>
                       </div>,
                     ],
@@ -148,7 +145,7 @@ export function TransacoesDivergentes() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="font-semibold text-gray-700">
-                              Transações Financeiro
+                              Valores 1
                             </FormLabel>
                             <FormControl>
                               <Input
@@ -158,8 +155,7 @@ export function TransacoesDivergentes() {
                               />
                             </FormControl>
                             <FormDescription className="text-gray-500">
-                              Digite as transações relacionadas ao financeiro do
-                              evento.
+                              Digite os valores que deseja comparar.
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -173,7 +169,7 @@ export function TransacoesDivergentes() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="font-semibold text-gray-700">
-                              Transações Admin
+                              Valores 2
                             </FormLabel>
                             <FormControl>
                               <Input
@@ -183,8 +179,7 @@ export function TransacoesDivergentes() {
                               />
                             </FormControl>
                             <FormDescription className="text-gray-500">
-                              Digite as transações relacionadas à administração
-                              do evento.
+                              Digite os outros valores que deseja comparar.
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -196,10 +191,10 @@ export function TransacoesDivergentes() {
                     <div className="pt-5">
                       <Button
                         type="submit"
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md shadow-sm transition-all"
-                        size="lg"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md shadow-sm transition-all"
+                        size="sm"
                       >
-                        Encontrar Divergências
+                        Realizar PROCV
                       </Button>
                     </div>
                   </form>
