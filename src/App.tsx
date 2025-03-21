@@ -4,6 +4,7 @@ import { Home } from "./components/home";
 import { CalculoEstornoParcial } from "./features/calculo-estorno-parcial";
 import { ValoresDivergentes } from "./features/utilitarios/valores";
 import { PROCV } from "./features/utilitarios/procv";
+import { CancelamentoMassa } from "./features/cancelamento-massa";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "cancelar-em-massa",
-        element: <div>Cancelamento em massa - separar mp e ps</div>,
+        element: <CancelamentoMassa />,
       },
     ],
   },
