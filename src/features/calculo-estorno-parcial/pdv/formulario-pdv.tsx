@@ -89,6 +89,7 @@ export function FormularioPDV({
       data.taxPaymentProducer > 0
         ? parteTaxaProdutor * (valueFull * taxPaymentDecimal)
         : 0;
+    console.log(valorTaxaPagamentoRepassadoAoProdutor);
 
     const producerNetValue =
       data.quemAssumeTaxPayment === "cliente"

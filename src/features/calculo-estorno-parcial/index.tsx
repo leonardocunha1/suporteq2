@@ -9,8 +9,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FormularioOnline } from "./formulario-online";
 import { PDV } from "./pdv";
+import { Online } from "./online";
 
 export function CalculoEstornoParcial() {
   const [tipoTransacao, setTipoTransacao] = useState<string>("");
@@ -62,7 +62,7 @@ export function CalculoEstornoParcial() {
 
         {exibirFormulario &&
           (tipoTransacao === "online" ? (
-            <FormularioOnline
+            <Online
               onBack={() => {
                 setExibirFormulario(false);
                 setTipoTransacao("");
