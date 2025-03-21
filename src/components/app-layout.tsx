@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Nav } from "@/features/navbar/nav";
+import { Nav } from "@/components/navbar/nav";
 import { DollarSign, EqualNot, HomeIcon, Sigma, Table2 } from "lucide-react";
 import { Outlet } from "react-router";
 import { DataCollaborator } from "./avatar";
@@ -47,10 +47,10 @@ export function AppLayout() {
               to: "estorno-parcial",
             },
             {
-              title: "Separar MP e PS",
+              title: "Cancelamento em Massa",
               icon: DollarSign,
               variant: "default",
-              to: "separar-mp-ps",
+              to: "cancelar-em-massa",
             },
           ]}
           isCollapsed={isCollapsed}

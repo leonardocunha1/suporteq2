@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { AppLayout } from "./components/app-layout";
-import { Home } from "./features/home";
+import { Home } from "./components/home";
 import { CalculoEstornoParcial } from "./features/calculo-estorno-parcial";
 import { ValoresDivergentes } from "./features/utilitarios/valores";
 import { PROCV } from "./features/utilitarios/procv";
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <CalculoEstornoParcial />,
       },
       {
-        path: "separar-mp-ps",
+        path: "cancelar-em-massa",
         element: <div>Cancelamento em massa - separar mp e ps</div>,
       },
     ],
