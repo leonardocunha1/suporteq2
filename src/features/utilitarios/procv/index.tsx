@@ -212,11 +212,11 @@ export function PROCV() {
                     </CardHeader>
                     <CardContent>
                       <ListaDivergencias
-                        titulo="📊 Somente no Financeiro:"
+                        titulo="📊 Somente no Valores 1:"
                         itens={valoresFinanceiros}
                       />
                       <ListaDivergencias
-                        titulo="🏛️ Somente no Administrativo:"
+                        titulo="🏛️ Somente no Valores 2"
                         itens={valoresAdministrativos}
                       />
                     </CardContent>
