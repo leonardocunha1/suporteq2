@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { Nav } from "@/components/navbar/nav";
-import { DollarSign, EqualNot, HomeIcon, Sigma, Table2 } from "lucide-react";
+import {
+  DollarSign,
+  HandHelping,
+  HomeIcon,
+  Sigma,
+  Table2,
+  TicketX,
+} from "lucide-react";
 import { Outlet } from "react-router";
 import { DataCollaborator } from "./avatar";
 import LogoutButton from "./ui/logout-button";
@@ -25,7 +32,7 @@ export function AppLayout() {
             },
             {
               title: "Utilitários",
-              icon: EqualNot,
+              icon: HandHelping,
               variant: "default",
               to: [
                 {
@@ -48,7 +55,7 @@ export function AppLayout() {
             },
             {
               title: "Cancelamento em Massa",
-              icon: DollarSign,
+              icon: TicketX,
               variant: "default",
               to: "cancelar-em-massa",
             },
