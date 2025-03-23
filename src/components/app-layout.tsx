@@ -17,7 +17,7 @@ export function AppLayout() {
 
   return (
     <div
-      className={`grid transition-all duration-300 text-sm ${
+      className={`grid transition-all duration-300 overflow-x-hidden text-sm ${
         isCollapsed ? "grid-cols-[4rem_1fr]" : "grid-cols-[18rem_1fr]"
       }`}
     >
@@ -69,7 +69,7 @@ export function AppLayout() {
         <aside className="flex bg-stone-100 justify-end px-4 h-[60px] border-b">
           <DataCollaborator />
         </aside>
-        <main className="flex flex-col bg-stone-50 h-[calc(100dvh-60px)] overflow-y-auto p-5">
+        <main className="flex flex-col bg-stone-50 h-[calc(100dvh-60px)] overflow-y-auto p-6 sm:p-5">
           <Outlet />
         </main>
       </div>

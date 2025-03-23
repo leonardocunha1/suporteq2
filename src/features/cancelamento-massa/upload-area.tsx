@@ -31,7 +31,7 @@ export function UploadArea({ onFileSelect, fileInputRef }: UploadAreaProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="space-y-4"
+      className="space-y-4 w-full text-center"
     >
       <label
         className={`flex flex-col items-center justify-center border-2 border-dashed p-6 rounded-lg cursor-pointer transition h-60 ${

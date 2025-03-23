@@ -107,7 +107,10 @@ const NavItem = ({
       <TooltipTrigger>
         {Array.isArray(link.to) ? (
           <Accordion type="single" collapsible className="border-none">
-            <AccordionItem value={`accordion-${link.title}`} className="border-none">
+            <AccordionItem
+              value={`accordion-${link.title}`}
+              className="border-none"
+            >
               <AccordionTrigger
                 className={cn(
                   { variant: link.variant },

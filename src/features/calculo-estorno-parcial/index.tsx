@@ -11,10 +11,13 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PDV } from "./pdv";
 import { Online } from "./online";
+import { useIsMobile } from "@/lib/is-mobile-view";
+import { cn } from "@/lib/utils";
 
 export function CalculoEstornoParcial() {
   const [tipoTransacao, setTipoTransacao] = useState<string>("");
   const [exibirFormulario, setExibirFormulario] = useState<boolean>(false);
+  const isMobile = useIsMobile();
 
   return (
     <Tabs defaultValue="calculo">
@@ -33,8 +36,16 @@ export function CalculoEstornoParcial() {
                     {!exibirFormulario && (
                       <>
                         <Select onValueChange={setTipoTransacao}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione o tipo de transação" />
+                          <SelectTrigger
+                            className={cn(isMobile ? "w-full " : "w-72")}
+                          >
+                            <SelectValue
+                              placeholder={cn(
+                                isMobile
+                                  ? "Selecione"
+                                  : "Selecione o tipo de transação"
+                              )}
+                            />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="online">Online</SelectItem>

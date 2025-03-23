@@ -46,8 +46,8 @@ export function CancelamentoMassa() {
         layout
         transition={{ layout: { duration: 0.4, ease: "easeInOut" } }}
       >
-        <Card className="p-6 space-y-4 shadow-lg border border-gray-200 overflow-hidden">
-          <div className="max-w-2xl mx-auto space-y-6">
+        <Card className="p-6 space-y-4  shadow-lg border border-gray-200 ">
+          <div className="max-w-2xl w-full mx-auto space-y-6">
             <AnimatePresence mode="wait">
               {!file ? (
                 <UploadArea
