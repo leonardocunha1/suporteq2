@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { loginUser, verifyToken } from "@/services/auth";
+import { loginUser } from "@/services/auth";
 
 interface AuthState {
   isAuthenticated: boolean;
